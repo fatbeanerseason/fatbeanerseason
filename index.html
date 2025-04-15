@@ -399,7 +399,7 @@
         </button>
     </div>
 
-    <div class="copy-notification" id="copy-notification">Contract copied</div>
+    <div class="copy-notification" id="copy-notification">Copied!</div>
 
     <!-- Audio Elements -->
     <audio id="cha-ching" src="cha-ching.mp3"></audio>
@@ -428,6 +428,7 @@
                 mainPage.style.display = 'block';
                 if (!isMuted) {
                     backgroundMusic.play();
+                    chaChingSound.play(); // Play cha-ching sound when entering main page
                 }
                 bgVideo.play();
             }
