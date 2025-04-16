@@ -160,10 +160,15 @@
                 display: block;
             }
             
-            /* Only adjust the bottom ticker position */
+            /* Position the bottom ticker higher on mobile to avoid toolbar */
             .rotating-text-bottom {
-                bottom: 40px; /* Position it 40px from bottom to appear above toolbar */
+                bottom: 80px !important; /* Position it even higher to clear toolbar */
                 z-index: 150; /* Keep high z-index */
+            }
+            
+            /* Also move the mute button up on mobile */
+            .mute-button {
+                bottom: 140px !important; /* Move button up further on mobile */
             }
         }
 
