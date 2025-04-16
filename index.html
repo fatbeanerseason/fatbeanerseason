@@ -159,6 +159,17 @@
             #bg-video-mobile {
                 display: block;
             }
+            
+            /* Ensure rotating text is visible on mobile */
+            .rotating-text-bottom {
+                bottom: 0;
+                position: fixed; /* Change to fixed to ensure visibility */
+                z-index: 20; /* Increase z-index to be above other content */
+            }
+            
+            .main-content {
+                padding-bottom: 60px; /* Add padding to prevent content from being hidden behind ticker */
+            }
         }
 
         .rotating-text {
@@ -212,6 +223,21 @@
             height: 100%;
             z-index: 5;
             position: relative;
+            padding-top: 60px; /* Add padding to account for top ticker */
+            padding-bottom: 60px; /* Add padding to account for bottom ticker */
+        }
+        
+        /* Additional mobile optimizations */
+        @media only screen and (max-width: 768px) {
+            .main-content {
+                justify-content: flex-start;
+                padding-top: 80px; /* More padding on mobile */
+            }
+            
+            #main-page {
+                overflow-y: auto; /* Allow scrolling on mobile if needed */
+                height: 100%;
+            }
         }
 
         .season-title {
