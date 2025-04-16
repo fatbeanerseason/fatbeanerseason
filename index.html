@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Access Restricted</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
@@ -160,34 +162,30 @@
                 display: block;
             }
             
-            /* Create a completely separate alternate bottom ticker for mobile */
-            #contract-bottom {
-                display: none; /* Hide the original */
+            /* Ensure rotating text is visible on mobile */
+            .rotating-text-bottom {
+                bottom: 0; /* Reset to 0 */
+                margin-bottom: env(safe-area-inset-bottom, 0); /* Use safe area inset */
+                position: fixed; /* Change to fixed to ensure visibility */
+                z-index: 150; /* Higher z-index to be above anything else */
             }
             
-            /* Add an alternate fixed ticker at the bottom */
-            .main-content::after {
-                content: "5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump";
-                position: fixed;
-                bottom: 70px;
-                left: 0;
+            /* Add a pseudo element to create space at the bottom */
+            #main-page::after {
+                content: "";
+                display: block;
+                height: 60px;
                 width: 100%;
-                background-color: #000;
-                color: #00ff64;
-                font-family: 'Courier Prime', 'Courier New', Courier, monospace;
-                font-weight: bold;
-                text-align: center;
-                padding: 10px 0;
-                font-size: 14px;
-                z-index: 9999;
-                text-shadow: 0 0 5px rgba(0, 255, 100, 0.7),
-                             0 0 10px rgba(0, 255, 100, 0.5),
-                             0 0 15px rgba(0, 255, 100, 0.3);
             }
             
-            /* Move mute button to not overlap with ticker */
+            .main-content {
+                padding-bottom: 80px; /* More padding to prevent content from being hidden */
+                min-height: calc(100vh - 120px); /* Ensure content fills space with room for tickers */
+            }
+            
+            /* Move mute button up from bottom to avoid toolbar */
             .mute-button {
-                bottom: 120px;
+                bottom: 70px; /* Move up from bottom */
             }
         }
 
@@ -242,6 +240,21 @@
             height: 100%;
             z-index: 5;
             position: relative;
+            padding-top: 60px; /* Add padding to account for top ticker */
+            padding-bottom: 60px; /* Add padding to account for bottom ticker */
+        }
+        
+        /* Additional mobile optimizations */
+        @media only screen and (max-width: 768px) {
+            .main-content {
+                justify-content: flex-start;
+                padding-top: 80px; /* More padding on mobile */
+            }
+            
+            #main-page {
+                overflow-y: auto; /* Allow scrolling on mobile if needed */
+                height: 100%;
+            }
         }
 
         .season-title {
@@ -511,14 +524,6 @@
                                     document.removeEventListener('touchstart', playVideoOnTouch);
                                 }, { once: true });
                             });
-                            
-                        // Add click handler for the mobile alternate contract address
-                        document.querySelector('.main-content').addEventListener('click', function(e) {
-                            // Check if the click was on the ::after pseudo-element (approximate)
-                            if (e.clientY > window.innerHeight - 120) {
-                                copyContractAddress();
-                            }
-                        });
                     }, 100);
                 } else {
                     bgVideoDesktop.play()
