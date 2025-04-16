@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>Access Restricted</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
@@ -149,22 +149,6 @@
         #bg-video-mobile {
             display: none;
         }
-        
-        /* Media query for mobile devices */
-        @media only screen and (max-width: 768px) {
-            #bg-video-desktop {
-                display: none;
-            }
-            
-            #bg-video-mobile {
-                display: block;
-            }
-            
-            /* Make the logo bigger on mobile */
-            .season-title {
-                max-width: 85% !important; /* Larger on mobile than desktop (60%) */
-            }
-        }
 
         .rotating-text {
             position: absolute;
@@ -173,8 +157,9 @@
             overflow: hidden;
             white-space: nowrap;
             color: #00ff64;
-            font-family: monospace;
+            font-family: 'Courier Prime', 'Courier New', Courier, monospace;
             font-size: 14px;
+            font-weight: bold;
             cursor: pointer;
             text-shadow: 0 0 5px rgba(0, 255, 100, 0.7),
                          0 0 10px rgba(0, 255, 100, 0.5),
@@ -189,6 +174,7 @@
 
         .rotating-text-bottom {
             bottom: 0;
+            position: fixed;
         }
 
         .marquee {
@@ -284,7 +270,7 @@
 
         .mute-button {
             position: absolute;
-            bottom: 20px;
+            bottom: 60px;
             right: 20px;
             background: rgba(0, 0, 0, 0.5);
             border: none;
@@ -325,7 +311,57 @@
             font-weight: normal; /* Not bold */
             font-size: 14px; /* Smaller text */
             display: none;
-            z-index: 100;
+            z-index: 9999;
+        }
+        
+        /* Footer specific to mobile */
+        .mobile-footer {
+            display: none;
+        }
+        
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 768px) {
+            #bg-video-desktop {
+                display: none;
+            }
+            
+            #bg-video-mobile {
+                display: block;
+            }
+            
+            /* Make the logo bigger on mobile */
+            .season-title {
+                max-width: 85% !important; /* Larger on mobile than desktop (60%) */
+            }
+            
+            /* Mobile footer */
+            .mobile-footer {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: #000;
+                z-index: 9999;
+                padding: 10px 0;
+            }
+            
+            .mobile-contract {
+                color: #00ff64;
+                font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+                font-weight: bold;
+                text-align: center;
+                font-size: 14px;
+                text-shadow: 0 0 5px rgba(0, 255, 100, 0.7),
+                             0 0 10px rgba(0, 255, 100, 0.5),
+                             0 0 15px rgba(0, 255, 100, 0.3);
+                cursor: pointer;
+            }
+            
+            /* Hide the bottom rotating text on mobile */
+            .rotating-text-bottom {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -361,18 +397,18 @@
         </video>
 
         <!-- Rotating Text -->
-        <div class="rotating-text rotating-text-top" id="contract-top" style="font-family: 'Courier New', Courier, monospace !important;">
+        <div class="rotating-text rotating-text-top" id="contract-top">
             <div class="marquee">
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier New', Courier, monospace !important;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
             </div>
         </div>
 
@@ -400,19 +436,24 @@
             </div>
         </div>
 
-        <div class="rotating-text rotating-text-bottom" id="contract-bottom" style="font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">
+        <div class="rotating-text rotating-text-bottom" id="contract-bottom">
             <div class="marquee">
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
-                <span style="text-shadow: 0 0 5px rgba(0, 255, 100, 0.7), 0 0 10px rgba(0, 255, 100, 0.5), 0 0 15px rgba(0, 255, 100, 0.3); font-family: 'Courier Prime', 'Courier New', Courier, monospace !important; font-weight: bold;">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
+                <span>5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</span>
             </div>
+        </div>
+        
+        <!-- Mobile-specific footer -->
+        <div class="mobile-footer">
+            <div class="mobile-contract" id="mobile-contract">5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump</div>
         </div>
 
         <button class="mute-button" id="mute-button">
@@ -439,6 +480,7 @@
             const seasonTitle = document.getElementById('season-title');
             const contractTop = document.getElementById('contract-top');
             const contractBottom = document.getElementById('contract-bottom');
+            const mobileContract = document.getElementById('mobile-contract');
             const copyNotification = document.getElementById('copy-notification');
             const chaChingSound = document.getElementById('cha-ching');
             const backgroundMusic = document.getElementById('background-music');
@@ -458,43 +500,11 @@
             bgVideoMobile.setAttribute('webkit-playsinline', '');
 
             let isMuted = false;
-            let lastViewportHeight = window.innerHeight;
             
             // Function to determine if user is on mobile
             function isMobileDevice() {
                 return (window.innerWidth <= 768);
             }
-            
-            // Function to adjust elements based on toolbar visibility
-            function adjustForToolbar() {
-                if (!isMobileDevice() || mainPage.style.display !== 'block') return;
-                
-                const currentViewportHeight = window.innerHeight;
-                const heightDifference = lastViewportHeight - currentViewportHeight;
-                
-                // If viewport height decreased (toolbar appeared), move elements up
-                // If viewport height increased (toolbar disappeared), move elements down
-                if (Math.abs(heightDifference) > 50) { // Only respond to significant height changes
-                    // Toolbar appeared (viewport got smaller)
-                    if (heightDifference > 0) {
-                        contractBottom.style.bottom = '60px';
-                        muteButton.style.bottom = '120px';
-                    } 
-                    // Toolbar disappeared (viewport got larger)
-                    else {
-                        contractBottom.style.bottom = '0px';
-                        muteButton.style.bottom = '20px';
-                    }
-                    
-                    lastViewportHeight = currentViewportHeight;
-                }
-            }
-            
-            // Listen for resize events which happen when toolbar shows/hides
-            window.addEventListener('resize', adjustForToolbar);
-            
-            // Listen for scroll events which can trigger toolbar show/hide on some browsers
-            window.addEventListener('scroll', adjustForToolbar);
             
             // Function to show main page
             function showMainPage() {
@@ -504,9 +514,6 @@
                     backgroundMusic.play();
                     chaChingSound.play(); // Play cha-ching sound when entering main page
                 }
-                
-                // Initialize viewport height tracking
-                lastViewportHeight = window.innerHeight;
                 
                 // Play appropriate video based on device
                 if (isMobileDevice()) {
@@ -521,9 +528,6 @@
                                     document.removeEventListener('touchstart', playVideoOnTouch);
                                 }, { once: true });
                             });
-                            
-                        // Check initial toolbar state
-                        adjustForToolbar();
                     }, 100);
                 } else {
                     bgVideoDesktop.play()
@@ -549,7 +553,8 @@
 
             // Contract address click events
             contractTop.addEventListener('click', copyContractAddress);
-            contractBottom.addEventListener('click', copyContractAddress);
+            if (contractBottom) contractBottom.addEventListener('click', copyContractAddress);
+            mobileContract.addEventListener('click', copyContractAddress);
 
             // Season title click event
             seasonTitle.addEventListener('click', function() {
