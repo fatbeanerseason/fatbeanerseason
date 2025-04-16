@@ -160,34 +160,9 @@
                 display: block;
             }
             
-            /* Create a completely separate alternate bottom ticker for mobile */
-            #contract-bottom {
-                display: none; /* Hide the original */
-            }
-            
-            /* Add an alternate fixed ticker at the bottom */
-            .main-content::after {
-                content: "5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump";
-                position: fixed;
-                bottom: 70px;
-                left: 0;
-                width: 100%;
-                background-color: #000;
-                color: #00ff64;
-                font-family: 'Courier Prime', 'Courier New', Courier, monospace;
-                font-weight: bold;
-                text-align: center;
-                padding: 10px 0;
-                font-size: 14px;
-                z-index: 9999;
-                text-shadow: 0 0 5px rgba(0, 255, 100, 0.7),
-                             0 0 10px rgba(0, 255, 100, 0.5),
-                             0 0 15px rgba(0, 255, 100, 0.3);
-            }
-            
-            /* Move mute button to not overlap with ticker */
-            .mute-button {
-                bottom: 120px;
+            /* Make the logo bigger on mobile */
+            .season-title {
+                max-width: 85% !important; /* Larger on mobile than desktop (60%) */
             }
         }
 
@@ -549,130 +524,6 @@
                             
                         // Check initial toolbar state
                         adjustForToolbar();
-                    }, 100);
-                } else {
-                    bgVideoDesktop.play()
-                        .catch(error => console.log('Desktop video autoplay error:', error));
-                }
-            }
-
-            // Confirm button click event
-            confirmButton.addEventListener('click', showMainPage);
-
-            // Function to copy contract address
-            function copyContractAddress() {
-                const contractAddress = '5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump';
-                navigator.clipboard.writeText(contractAddress).then(() => {
-                    copyNotification.style.display = 'block';
-                    chaChingSound.play();
-                    
-                    setTimeout(() => {
-                        copyNotification.style.display = 'none';
-                    }, 2000);
-                });
-            }
-
-            // Contract address click events
-            contractTop.addEventListener('click', copyContractAddress);
-            contractBottom.addEventListener('click', copyContractAddress);
-
-            // Season title click event
-            seasonTitle.addEventListener('click', function() {
-                chaChingSound.play();
-            });
-
-            // Season title mouse move effect
-            document.addEventListener('mousemove', function(e) {
-                if (mainPage.style.display === 'block') {
-                    const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                    const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-                    seasonTitle.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
-                }
-            });
-
-            // Get SVG icons for both pages
-            const soundOnIcon = document.getElementById('sound-on-icon');
-            const soundOffIcon = document.getElementById('sound-off-icon');
-            const entrySoundOnIcon = document.getElementById('entry-sound-on-icon');
-            const entrySoundOffIcon = document.getElementById('entry-sound-off-icon');
-            const entryMuteButton = document.getElementById('entry-mute-button');
-            
-            // Mute button functionality for main page
-            muteButton.addEventListener('click', function() {
-                isMuted = !isMuted;
-                updateMuteState();
-            });
-            
-            // Mute button functionality for entry page
-            entryMuteButton.addEventListener('click', function() {
-                isMuted = !isMuted;
-                updateMuteState();
-                
-                // Make sure background music doesn't play if muted when going to main page
-                if (isMuted) {
-                    backgroundMusic.pause();
-                }
-            });
-            
-            // Function to update mute state on both pages
-            function updateMuteState() {
-                if (isMuted) {
-                    backgroundMusic.pause();
-                    bgVideoDesktop.muted = true;
-                    bgVideoMobile.muted = true;
-                    soundOnIcon.style.display = 'none';
-                    soundOffIcon.style.display = 'block';
-                    entrySoundOnIcon.style.display = 'none';
-                    entrySoundOffIcon.style.display = 'block';
-                } else {
-                    // Only play background music if on main page
-                    if (mainPage.style.display === 'block') {
-                        backgroundMusic.play();
-                    }
-                    bgVideoDesktop.muted = false;
-                    bgVideoMobile.muted = false;
-                    soundOnIcon.style.display = 'block';
-                    soundOffIcon.style.display = 'none';
-                    entrySoundOnIcon.style.display = 'block';
-                    entrySoundOffIcon.style.display = 'none';
-                }
-            }
-
-            // Hover effect for mute button
-            muteButton.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-            });
-            
-            muteButton.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    </script>
-</body>
-</html>cha-ching sound when entering main page
-                }
-                
-                // Play appropriate video based on device
-                if (isMobileDevice()) {
-                    // Force play on mobile with a small delay to ensure DOM is ready
-                    setTimeout(() => {
-                        bgVideoMobile.play()
-                            .catch(error => {
-                                console.log('Mobile video autoplay error:', error);
-                                // Try again with user interaction
-                                document.addEventListener('touchstart', function playVideoOnTouch() {
-                                    bgVideoMobile.play();
-                                    document.removeEventListener('touchstart', playVideoOnTouch);
-                                }, { once: true });
-                            });
-                            
-                        // Add click handler for the mobile alternate contract address
-                        document.querySelector('.main-content').addEventListener('click', function(e) {
-                            // Check if the click was on the ::after pseudo-element (approximate)
-                            if (e.clientY > window.innerHeight - 120) {
-                                copyContractAddress();
-                            }
-                        });
                     }, 100);
                 } else {
                     bgVideoDesktop.play()
