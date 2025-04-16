@@ -133,7 +133,7 @@
             position: relative;
         }
 
-        #bg-video-desktop, #bg-video-mobile {
+        .bg-video {
             position: absolute;
             top: 0;
             left: 0;
@@ -141,6 +141,8 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            pointer-events: none; /* Prevent interaction with video */
+            background-color: #000; /* Fallback color */
         }
         
         /* Hide mobile video on desktop */
@@ -346,10 +348,10 @@
 
     <!-- Main Page -->
     <div id="main-page">
-        <video id="bg-video-desktop" class="bg-video" autoplay loop muted>
+        <video id="bg-video-desktop" class="bg-video" autoplay loop muted playsinline webkit-playsinline>
             <source src="bgvid.mp4" type="video/mp4">
         </video>
-        <video id="bg-video-mobile" class="bg-video" autoplay loop muted>
+        <video id="bg-video-mobile" class="bg-video" autoplay loop muted playsinline webkit-playsinline>
             <source src="mobilevid.mp4" type="video/mp4">
         </video>
 
@@ -440,6 +442,16 @@
             const bgVideoDesktop = document.getElementById('bg-video-desktop');
             const bgVideoMobile = document.getElementById('bg-video-mobile');
 
+            // Preload videos but keep them paused
+            bgVideoDesktop.load();
+            bgVideoMobile.load();
+            
+            // Set playsinline attribute again through JavaScript (for iOS)
+            bgVideoDesktop.setAttribute('playsinline', '');
+            bgVideoMobile.setAttribute('playsinline', '');
+            bgVideoDesktop.setAttribute('webkit-playsinline', '');
+            bgVideoMobile.setAttribute('webkit-playsinline', '');
+
             let isMuted = false;
             
             // Function to determine if user is on mobile
@@ -458,9 +470,21 @@
                 
                 // Play appropriate video based on device
                 if (isMobileDevice()) {
-                    bgVideoMobile.play();
+                    // Force play on mobile with a small delay to ensure DOM is ready
+                    setTimeout(() => {
+                        bgVideoMobile.play()
+                            .catch(error => {
+                                console.log('Mobile video autoplay error:', error);
+                                // Try again with user interaction
+                                document.addEventListener('touchstart', function playVideoOnTouch() {
+                                    bgVideoMobile.play();
+                                    document.removeEventListener('touchstart', playVideoOnTouch);
+                                }, { once: true });
+                            });
+                    }, 100);
                 } else {
-                    bgVideoDesktop.play();
+                    bgVideoDesktop.play()
+                        .catch(error => console.log('Desktop video autoplay error:', error));
                 }
             }
 
