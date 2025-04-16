@@ -133,7 +133,7 @@
             position: relative;
         }
 
-        #bg-video {
+        #bg-video-desktop, #bg-video-mobile {
             position: absolute;
             top: 0;
             left: 0;
@@ -141,6 +141,22 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+        }
+        
+        /* Hide mobile video on desktop */
+        #bg-video-mobile {
+            display: none;
+        }
+        
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 768px) {
+            #bg-video-desktop {
+                display: none;
+            }
+            
+            #bg-video-mobile {
+                display: block;
+            }
         }
 
         .rotating-text {
@@ -330,8 +346,11 @@
 
     <!-- Main Page -->
     <div id="main-page">
-        <video id="bg-video" autoplay loop muted>
+        <video id="bg-video-desktop" class="bg-video" autoplay loop muted>
             <source src="bgvid.mp4" type="video/mp4">
+        </video>
+        <video id="bg-video-mobile" class="bg-video" autoplay loop muted>
+            <source src="mobilevid.mp4" type="video/mp4">
         </video>
 
         <!-- Rotating Text -->
@@ -399,7 +418,7 @@
         </button>
     </div>
 
-    <div class="copy-notification" id="copy-notification">Copied!</div>
+    <div class="copy-notification" id="copy-notification">Contract copied</div>
 
     <!-- Audio Elements -->
     <audio id="cha-ching" src="cha-ching.mp3"></audio>
@@ -418,9 +437,15 @@
             const backgroundMusic = document.getElementById('background-music');
             const muteButton = document.getElementById('mute-button');
 
-            const bgVideo = document.getElementById('bg-video');
+            const bgVideoDesktop = document.getElementById('bg-video-desktop');
+            const bgVideoMobile = document.getElementById('bg-video-mobile');
 
             let isMuted = false;
+            
+            // Function to determine if user is on mobile
+            function isMobileDevice() {
+                return (window.innerWidth <= 768);
+            }
             
             // Function to show main page
             function showMainPage() {
@@ -430,7 +455,13 @@
                     backgroundMusic.play();
                     chaChingSound.play(); // Play cha-ching sound when entering main page
                 }
-                bgVideo.play();
+                
+                // Play appropriate video based on device
+                if (isMobileDevice()) {
+                    bgVideoMobile.play();
+                } else {
+                    bgVideoDesktop.play();
+                }
             }
 
             // Confirm button click event
@@ -495,7 +526,8 @@
             function updateMuteState() {
                 if (isMuted) {
                     backgroundMusic.pause();
-                    bgVideo.muted = true;
+                    bgVideoDesktop.muted = true;
+                    bgVideoMobile.muted = true;
                     soundOnIcon.style.display = 'none';
                     soundOffIcon.style.display = 'block';
                     entrySoundOnIcon.style.display = 'none';
@@ -505,7 +537,8 @@
                     if (mainPage.style.display === 'block') {
                         backgroundMusic.play();
                     }
-                    bgVideo.muted = false;
+                    bgVideoDesktop.muted = false;
+                    bgVideoMobile.muted = false;
                     soundOnIcon.style.display = 'block';
                     soundOffIcon.style.display = 'none';
                     entrySoundOnIcon.style.display = 'block';
