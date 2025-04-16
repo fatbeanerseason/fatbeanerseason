@@ -160,16 +160,34 @@
                 display: block;
             }
             
-            /* Position the bottom ticker at a fixed height from bottom */
-            .rotating-text-bottom {
-                position: absolute;
-                bottom: 70px !important; /* Force it to be even higher up */
-                z-index: 999; /* Extremely high z-index */
+            /* Create a completely separate alternate bottom ticker for mobile */
+            #contract-bottom {
+                display: none; /* Hide the original */
             }
             
-            /* Move mute button up to avoid conflict with bottom ticker */
+            /* Add an alternate fixed ticker at the bottom */
+            .main-content::after {
+                content: "5LJMyR8MtAkbtpf8kFUV789oFG3xaGDdcnFxYt9pump";
+                position: fixed;
+                bottom: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #000;
+                color: #00ff64;
+                font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+                font-weight: bold;
+                text-align: center;
+                padding: 10px 0;
+                font-size: 14px;
+                z-index: 9999;
+                text-shadow: 0 0 5px rgba(0, 255, 100, 0.7),
+                             0 0 10px rgba(0, 255, 100, 0.5),
+                             0 0 15px rgba(0, 255, 100, 0.3);
+            }
+            
+            /* Move mute button to not overlap with ticker */
             .mute-button {
-                bottom: 130px !important;
+                bottom: 120px;
             }
         }
 
@@ -493,6 +511,14 @@
                                     document.removeEventListener('touchstart', playVideoOnTouch);
                                 }, { once: true });
                             });
+                            
+                        // Add click handler for the mobile alternate contract address
+                        document.querySelector('.main-content').addEventListener('click', function(e) {
+                            // Check if the click was on the ::after pseudo-element (approximate)
+                            if (e.clientY > window.innerHeight - 120) {
+                                copyContractAddress();
+                            }
+                        });
                     }, 100);
                 } else {
                     bgVideoDesktop.play()
