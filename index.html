@@ -160,10 +160,16 @@
                 display: block;
             }
             
-            /* Only adjust the bottom ticker position */
+            /* Position the bottom ticker at a fixed height from bottom */
             .rotating-text-bottom {
-                bottom: 40px; /* Position it 40px from bottom to appear above toolbar */
-                z-index: 150; /* Keep high z-index */
+                position: absolute;
+                bottom: 70px !important; /* Force it to be even higher up */
+                z-index: 999; /* Extremely high z-index */
+            }
+            
+            /* Move mute button up to avoid conflict with bottom ticker */
+            .mute-button {
+                bottom: 130px !important;
             }
         }
 
